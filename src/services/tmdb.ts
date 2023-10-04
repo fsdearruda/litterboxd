@@ -1,6 +1,6 @@
 import axios from "axios";
-import genreType from "./genres";
-import Movie from "../@types/movie";
+import { genreList } from "../utils/genres";
+import { Movie, Provider, ProviderResult } from "../@types/movie";
 
 const { TMDB_API_TOKEN } = process.env;
 const defaultLanguage = "pt-BR";
@@ -18,14 +18,15 @@ const api = axios.create({
 });
 
 function formatMovie(movie: any): Movie {
-  const { id, title, original_title, overview, genre_ids, backdrop_path, poster_path, release_date } = movie;
+  const { id, title, original_title, overview, genre_ids, backdrop_path, poster_path, release_date, vote_average } = movie;
   return {
     id,
     title,
     original_title,
     overview,
     release_date,
-    genres: genre_ids.map((genreId: number) => genreType[genreId]),
+    genres: genre_ids.map((genreId: number) => genreList[genreId]),
+    rating: Math.round(vote_average),
     images: {
       backdrop: imageBaseUrl + backdrop_path,
       poster: imageBaseUrl + poster_path,
@@ -33,10 +34,18 @@ function formatMovie(movie: any): Movie {
   };
 }
 
-async function searchMovie(query: string): Promise<Movie[]> {
+async function getMovieProviders(movieId: number): Promise<ProviderResult> {
+  const { data } = await api.get(`/movie/${movieId}/watch/providers`);
+  const { BR } = data.results as { BR: ProviderResult };
+
+  return BR || {};
+}
+
+async function searchMovie(query: string, year?: string): Promise<Movie[]> {
   const { data } = await api.get("/search/movie", {
     params: {
       query,
+      year,
     },
   });
 
@@ -45,4 +54,4 @@ async function searchMovie(query: string): Promise<Movie[]> {
   return formattedMovies;
 }
 
-export { searchMovie };
+export { searchMovie, getMovieProviders };
