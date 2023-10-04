@@ -1,8 +1,6 @@
 import axios from "axios";
 import getColors from "get-image-colors";
 
-// Ordenar por cor com mais contraste com a mais ocorrente na imagem
-
 async function getAccentColor(imageUrl: string): Promise<number> {
   const { data } = await axios.get(imageUrl, {
     responseType: "arraybuffer",
@@ -12,7 +10,7 @@ async function getAccentColor(imageUrl: string): Promise<number> {
   const colors = await getColors(imageBuffer, "image/jpeg");
   const hexColors = colors.map(color => color.hex());
 
-  const mostUsedColor = hexColors[0];
+  const mostUsedColor = hexColors[2];
   const accentColor = parseInt(mostUsedColor.slice(1), 16);
 
   return accentColor;
