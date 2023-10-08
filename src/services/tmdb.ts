@@ -1,6 +1,6 @@
 import axios from "axios";
 import { genreList } from "../utils/genres";
-import { Movie, Provider, ProviderResult } from "../@types/movie";
+import { Movie, ProviderResult } from "../@types/movie";
 
 const { TMDB_API_TOKEN } = process.env;
 const defaultLanguage = "pt-BR";
@@ -28,8 +28,8 @@ function formatMovie(movie: any): Movie {
     genres: genre_ids.map((genreId: number) => genreList[genreId]),
     rating: Math.round(vote_average),
     images: {
-      backdrop: imageBaseUrl + backdrop_path,
-      poster: imageBaseUrl + poster_path,
+      backdrop: backdrop_path ? imageBaseUrl + backdrop_path : null,
+      poster: poster_path ? imageBaseUrl + poster_path : null,
     },
   };
 }

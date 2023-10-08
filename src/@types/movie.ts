@@ -23,8 +23,8 @@ type Movie = {
     emoji: string;
   }[];
   images: {
-    backdrop: string;
-    poster: string;
+    backdrop: string | null;
+    poster: string | null;
   };
   providers?: ProviderResult;
 };

@@ -2,6 +2,7 @@ import axios from "axios";
 import getColors from "get-image-colors";
 
 async function getAccentColor(imageUrl: string): Promise<number> {
+
   const { data } = await axios.get(imageUrl, {
     responseType: "arraybuffer",
   });
