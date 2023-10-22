@@ -14,7 +14,6 @@ function createButton(properties: { label: string; style: ButtonStyle; customId:
 
 async function createMovieEmbed(movie: Movie, details?: { user: string; letterboxdUrl: string; providers: string[] }): Promise<APIEmbed> {
   let movieAccent = 0x000000;
-  console.log(movie.images.poster);
   if (movie.images.poster) movieAccent = await getAccentColor(movie.images.poster);
 
   const [releaseYear, releaseMonth, releaseDay] = movie.release_date.split("-");

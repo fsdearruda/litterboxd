@@ -35,7 +35,6 @@ async function getPageTitle(url: string) {
 function isSameMovie(movie: Movie, details: any) {
   const sameName = details.title.toLocaleLowerCase().includes(movie.original_title.toLowerCase());
   const sameYear = `(${movie.release_date.split("-")[0]})` === details.year;
-  console.log({ sameName, sameYear });
   return sameName && sameYear;
 }
 
@@ -54,8 +53,6 @@ async function getLetterboxdFilmUrl(movie: Movie, url?: string): Promise<string 
   if (resMovie === null) return null;
 
   const letterboxdFilm = resMovie;
-  console.log(movie, letterboxdFilm);
-  console.log(isSameMovie(movie, letterboxdFilm));
   if (isSameMovie(movie, letterboxdFilm)) {
     return url;
   } else {
