@@ -61,7 +61,7 @@ class MovieListEmbed {
 
   private async listen() {
     const collector = this.reply.createMessageComponentCollector({ time: 60000, componentType: ComponentType.Button });
-    collector.on("collect", this.interactionHandler.bind(this));
+    collector.once("collect", this.interactionHandler.bind(this));
   }
 
   private async init() {
