@@ -9,7 +9,7 @@ import {
 import { readdir } from "fs/promises";
 import path from "path";
 
-const { DISCORD_TOKEN, CLIENT_ID, GUILD_ID } = process.env;
+const { DISCORD_TOKEN, DISCORD_CLIENT_ID, DISCORD_GUILD_ID, DISCORD_DEV_GUILD_ID } = process.env;
 
 const loadCommands = async (
   client: ClientWithCommands,
@@ -45,7 +45,7 @@ const loadCommands = async (
     );
 
     const data = (await rest.put(
-      Routes.applicationGuildCommands(CLIENT_ID as string, GUILD_ID as string),
+      Routes.applicationGuildCommands(DISCORD_CLIENT_ID as string, DISCORD_DEV_GUILD_ID ?? DISCORD_GUILD_ID as string),
       { body: commands }
     )) as Array<any>;
 
